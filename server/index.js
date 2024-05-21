@@ -64,9 +64,9 @@ app.get("/courses", async (req, res) => {
   res.json(courses);
 });
 
-app.post("/course", async (req,res) => {
-  const {courseName} = req.body;
-  const course = await Course.findOne({name:courseName})
+app.post("/course", async (req, res) => {
+  const { courseName } = req.body;
+  const course = await Course.findOne({ name: courseName });
   res.json(course);
 });
 
@@ -150,12 +150,22 @@ app.post("/rounds/postround", async (req, res) => {
   await round.save();
 });
 
+app.put("/rounds", async (req, res) => {
+  //Date and Course update not working
+  const {editedRound} = req.body;
+  // console.log(editedRound)
+  const id = editedRound.id;
+  const updatedRound = await Round.findByIdAndUpdate(id, editedRound)
+  // console.log(updatedRound);
+  res.json(updatedRound);
+});
+
 app.get("/rounds/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const round = await Round.findById(id);
     if (!round) {
-      return res.json('Error')
+      return res.json("Error");
     }
     res.json(round);
   } catch (e) {

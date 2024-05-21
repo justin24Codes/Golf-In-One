@@ -133,7 +133,7 @@ const Rounds = () => {
       >
         Add Round
       </button>
-      <EditRoundForm onClose={() => setEditFormOpen(false)} open={editFormOpen} id={roundId}/>
+      <EditRoundForm onClose={() => setEditFormOpen(false)} open={editFormOpen} id={roundId} setRefreshRounds={setRefreshRounds}/>
       <NewRoundForm onClose={onCloseForm} open={formOpen} setRefreshRounds={setRefreshRounds}/>
     </div>
   );

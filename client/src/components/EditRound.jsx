@@ -18,7 +18,7 @@ import EditFormTeeSelector from "./EditFormTeeSelector.jsx";
 import { getAllCourses } from "../services/Courses.js";
 import { IoCloseOutline } from "react-icons/io5";
 
-const EditRoundForm = ({ onClose, open, id }) => {
+const EditRoundForm = ({ onClose, open, id, setRefreshRounds }) => {
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState("");
   const [courseId, setCourseId] = useState("664437cb63c7786d837bb059");
@@ -38,19 +38,19 @@ const EditRoundForm = ({ onClose, open, id }) => {
     formState: { errors },
   } = useForm();
 
-  const editRound = (data) => {
+  const editRound = async (data) => {
     onClose();
     const score = data.score;
     const email = localStorage.getItem('email');
     const newDate = date.toISOString().slice(0, 10);
-    const round = { selectedCourse, tee, numHoles, newDate, score, email };
-    console.log(round)
-    // try {
-    //   setRefreshRounds(true);
-    //   await axios.post('http://localhost:3000/rounds/postround', {round});
-    // } catch (e) {
-    //   console.log(e)
-    // }
+    const roundId = round._id;
+    const editedRound = { course:selectedCourse, tee, numHoles, date:newDate, score, email, id:roundId };
+    try {
+      setRefreshRounds(true);
+      await axios.put('http://localhost:3000/rounds', {editedRound});
+    } catch (e) {
+      console.log(e)
+    }
   };
 
   useEffect(() => {
@@ -76,6 +76,7 @@ const EditRoundForm = ({ onClose, open, id }) => {
         );
         setTees(res.data.tees);
         setTee(res.data.tees[0].colour);
+        setSelectedCourse(res.data.name)
       } catch (e) {
         console.log(e);
       }
@@ -93,7 +94,7 @@ const EditRoundForm = ({ onClose, open, id }) => {
         setDate(oldDate);
         const courseName = res.data.course;
         const response = await axios.post(`http://localhost:3000/course`, {
-          courseName,
+          courseName
         });
         setTees(response.data.tees);
       } catch (e) {}
