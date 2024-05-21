@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { getAllCourses, getCourse } from "../services/Courses.js";
 import axios from "axios";
 
-const CourseSelector = ({ courses, select, setCourse, defaultValue, defaultValueId }) => {
+const EditRoundCourseSelector = ({ courses, select, setCourse, defaultValue, defaultValueId }) => {
 
   const [courseId, setCourseId] = useState('');
+  const [defaultValueCourseId, setDefaultValueCourseId] = useState('');
 
   const selection = (e) => {
     setCourse(e.target.value);
@@ -21,12 +22,14 @@ const CourseSelector = ({ courses, select, setCourse, defaultValue, defaultValue
   }, [defaultValueId]);
 
   useEffect(() => {
+    const courseName = defaultValue;
     const findCourse = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/courses/${courseId}`);
+        const res = await axios.post(`http://localhost:3000/course`, {courseName});
         setCourse(res.data.name);
+        setDefaultValueCourseId(res.data._id)
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     };
     findCourse();
@@ -39,7 +42,7 @@ const CourseSelector = ({ courses, select, setCourse, defaultValue, defaultValue
       value={courseId}
       // value={selectedCourse}
     >
-      {defaultValue && <option value={defaultValueId}>{defaultValue}</option>}
+      {defaultValue && <option value={defaultValueCourseId}>{defaultValue}</option>}
       {courses.map((item) => (
         <option key={item[1]} value={item[1]}>
           {item[0]}
@@ -49,4 +52,4 @@ const CourseSelector = ({ courses, select, setCourse, defaultValue, defaultValue
   );
 };
 
-export default CourseSelector;
+export default EditRoundCourseSelector;
