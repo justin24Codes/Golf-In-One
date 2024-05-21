@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const TeeSelector = ({ tees, select, defaultValue, id }) => {
+const EditFormTeeSelector = ({ tees, select, defaultValue, id }) => {
   const [selectedTee, setSelectedTee] = useState("");
   const selection = (e) => {
     setSelectedTee(e.target.value);
@@ -28,4 +28,4 @@ const TeeSelector = ({ tees, select, defaultValue, id }) => {
   );
 };
 
-export default TeeSelector;
+export default EditFormTeeSelector;

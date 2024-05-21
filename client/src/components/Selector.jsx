@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 
-const Selector = ({ data, select, setCourse }) => {
+const Selector = ({ data, select, setCourse, defaultValue = 'hi' }) => {
 
   const selection = (e) => {
-    console.log(e.target.value)
     if (setCourse) {
       setCourse(e.target.value);
     }
@@ -13,9 +12,10 @@ const Selector = ({ data, select, setCourse }) => {
   return (
     <select
       // name="selector"
-      defaultValue="Testing"
       className="w-64 sm:w-96 h-12 mb-4 bg-gray-200 rounded-md outline-none px-2 focus:border-golf border-2"
       onChange={selection}
+      // value={course}
+      defaultValue='testing'
     >
       {data.map((item) => (
         <option key={item[1]} value={item[1]}>{item[0]}</option>

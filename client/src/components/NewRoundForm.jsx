@@ -16,7 +16,7 @@ import { getAllCourses, getCourse } from "../services/Courses.js";
 import { postRound } from "../services/Rounds.js";
 import { IoCloseOutline } from "react-icons/io5";
 
-const NewRoundForm = ({ onClose, open }) => {
+const NewRoundForm = ({ onClose, open, setRefreshRounds }) => {
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState("");
   const [courseId, setCourseId] = useState("664437cb63c7786d837bb059");
@@ -64,12 +64,14 @@ const NewRoundForm = ({ onClose, open }) => {
   }, [courseId]);
 
   const postRound = async (data) => {
+    onClose();
     const score = data.score;
     const newDate = date.toISOString().slice(0, 10);
-    const round = { selectedCourse, tee, numHoles, newDate, score };
-    console.log(round);
+    const email = localStorage.getItem('email')
+    const round = { selectedCourse, tee, numHoles, newDate, score, email };
     try {
-      await axios.post('/rounds', round)
+      setRefreshRounds(true);
+      await axios.post('http://localhost:3000/rounds/postround', {round});
     } catch (e) {
       console.log(e)
     }
