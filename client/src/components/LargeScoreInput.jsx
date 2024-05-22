@@ -12,7 +12,7 @@ const LargeScoreInput = ({ placeholder = 72, name, register, error, ...props }) 
         type="number"
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        {...register(name, { required: true, min: 0 })}
+        {...register(name, {required: true, min: 0})}
         {...props}
       />
       <div className='h-6'>

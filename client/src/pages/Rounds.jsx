@@ -52,6 +52,10 @@ const Rounds = () => {
     };
     setRefreshRounds(false)
     getRounds();
+    //Score Differential
+    // const scoreDifferential = (113/)
+
+
   }, [refreshRounds]);
 
   return (
@@ -59,24 +63,24 @@ const Rounds = () => {
       <div className="flex flex-col items-center pb-8">
         <PageTitle title="Rounds" />
         <table className="w-11/12 mt-6 border-collapse drop-shadow-lg shadow-md rounded-xl">
-          <thead className="h-16 border-b-2 border-slate-400">
+          <thead className="h-16 border-b-2 border-stone-400">
             <tr className="text-left">
-              <th className="px-2 bg-slate-200 rounded-tl-xl">Score</th>
-              <th className="px-2 bg-slate-200">Course</th>
-              <th className="px-2 hidden sm:table-cell bg-slate-200 ">Holes</th>
-              <th className="px-2 hidden md:table-cell bg-slate-200 ">Date</th>
-              <th className="px-2 hidden lg:table-cell bg-slate-200">Tee</th>
-              <th className="px-2 hidden xl:table-cell bg-slate-200">
-                Handicap Differential
+              <th className="px-2 bg-stone-200 rounded-tl-xl">Score</th>
+              <th className="px-2 bg-stone-200">Course</th>
+              <th className="px-2 hidden sm:table-cell bg-stone-200 ">Holes</th>
+              <th className="px-2 hidden md:table-cell bg-stone-200 ">Date</th>
+              <th className="px-2 hidden lg:table-cell bg-stone-200">Tee</th>
+              <th className="px-2 hidden xl:table-cell bg-stone-200">
+                Course Handicap
               </th>
-              <th className="px-2 bg-slate-200"></th>
-              <th className="px-2 bg-slate-200 rounded-tr-xl"></th>
+              <th className="px-2 bg-stone-200"></th>
+              <th className="px-2 bg-stone-200 rounded-tr-xl"></th>
             </tr>
           </thead>
           <tbody className="rounded-b-lg">
             {rounds.map((round, index) => (
               <tr
-                className={`h-14 border-slate-300 border-b ${
+                className={`h-14 border-stone-300 border-b ${
                   index + 1 == rounds.length && "border-none"
                 }`}
                 key={index}

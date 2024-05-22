@@ -117,7 +117,7 @@ const EditRoundForm = ({ onClose, open, id, setRefreshRounds }) => {
           <IoCloseOutline className="w-8 h-8 right-2 top-2 absolute" />
         </button>
         <p className="flex self-center text-sm font-medium mb-1">Score</p>
-        <LargeScoreInput placeholder={round} name="score" register={register}/>
+        <LargeScoreInput placeholder={round} name="score" register={register} />
         <p className="flex self-start sm:ml-10 text-sm font-medium">Date</p>
         <DatePicker
           className="w-64 sm:w-96 text-center h-12 border border-gray-400 bg-white outline-none mb-4 rounded-md focus:border-golf"
