@@ -20,13 +20,6 @@ function Home() {
           <button className="h-10">Start Now</button>
         </Link>
       </div>
-      {/* <div className="bg-white w-dvh h-dvh justify-center">
-        <div className='bg-golf mx-36 h-36 text-white flex justify-center justify-self-center items-center my-12 shadow-2xl rounded-3xl'>
-          <p className='text-6xl  '>
-            #1 Rated Golf Website
-          </p>
-        </div>
-      </div> */}
     </div>
   );
 }

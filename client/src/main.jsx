@@ -8,7 +8,7 @@ import App from "./App.jsx";
 import NewRound from "./pages/NewRound.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import Login from "./pages/Login.jsx";
-import Handicap from "./pages/Handicap.jsx";
+import Statistics from "./pages/Statistics.jsx";
 
 import "./index.css";
 
@@ -49,8 +49,8 @@ const router = createBrowserRouter([
             element: <Rounds />,
           },
           {
-            path: "/handicap",
-            element: <Handicap />,
+            path: "/statistics",
+            element: <Statistics />,
           },
         ],
       },
