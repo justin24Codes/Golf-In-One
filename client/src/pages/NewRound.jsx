@@ -17,7 +17,7 @@ import { getAllCourses } from "../services/Courses.js";
 const NewRound = () => {
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState("");
-  const [courseId, setCourseId] = useState('6633168031ab54d2696a8447');
+  const [courseId, setCourseId] = useState("");
   const [tee, setTee] = useState("");
 
   const [tees, setTees] = useState([]);
@@ -56,6 +56,7 @@ const NewRound = () => {
       };
       getTees();
     }
+    console.log('Fetch Tees');
   }, [courseId]);
 
   return (
@@ -89,7 +90,9 @@ const NewRound = () => {
             data={tees && tees.map(({ allInfo, _id }) => [allInfo, _id])}
             select={setTee}
           />
-          <button className='border-2 border-black w-48 h-12 rounded-lg bg-golf'>Post Round</button>
+          <button className="border-2 border-black w-48 h-12 rounded-lg bg-golf">
+            Post Round
+          </button>
         </div>
       </form>
     </div>

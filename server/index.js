@@ -27,33 +27,33 @@ mongoose.connection.once("open", () => {
   console.log("Connected");
 });
 
-const store = MongoStore.create({
-  mongoUrl: "mongodb://127.0.0.1:27017/golfHandicapTracker",
-  touchAfter: 24 * 60 * 60,
-  crypto: {
-    secret,
-  },
-});
+// const store = MongoStore.create({
+//   mongoUrl: "mongodb://127.0.0.1:27017/golfHandicapTracker",
+//   touchAfter: 24 * 60 * 60,
+//   crypto: {
+//     secret,
+//   },
+// });
 
-store.on("error", function (e) {
-  console.log("mongo error store");
-});
+// store.on("error", function (e) {
+//   console.log("mongo error store");
+// });
 
-const sessionConfig = {
-  store,
-  name: "session",
-  secret: secret,
-  resave: true,
-  saveUninitialized: false,
-  cookie: {
-    httpOnly: true,
-    // secure: true,
-    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-    maxAge: 1000 * 60 * 60 * 24 * 7,
-  },
-};
+// const sessionConfig = {
+//   store,
+//   name: "session",
+//   secret: secret,
+//   resave: true,
+//   saveUninitialized: false,
+//   cookie: {
+//     httpOnly: true,
+//     // secure: true,
+//     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+//     maxAge: 1000 * 60 * 60 * 24 * 7,
+//   },
+// };
 
-app.use(session(sessionConfig));
+// app.use(session(sessionConfig));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -70,6 +70,17 @@ app.post("/course", async (req, res) => {
   res.json(course);
 });
 
+app.post("/tee", async (req, res) => {
+  const { course, colour } = req.body;
+  const golfCourse = await Course.findOne({ name: course });
+  if (golfCourse) {
+    const tee = golfCourse.tees.find((tee) => colour === tee.colour);
+    res.json(tee);
+  } else {
+    res.json("Error");
+  }
+});
+
 app.get("/users", async (req, res) => {
   const users = await User.find({});
   res.send(users);
@@ -78,9 +89,9 @@ app.get("/users", async (req, res) => {
 app.get("/courses/:id", async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
-    if (!course) {
-      return res.status(404).send("Course not found");
-    }
+    // if (!course) {
+    //   return res.status(404).send("Course not found");
+    // }
     res.json(course);
   } catch (error) {
     console.error(error);
@@ -152,10 +163,10 @@ app.post("/rounds/postround", async (req, res) => {
 
 app.put("/rounds", async (req, res) => {
   //Date and Course update not working
-  const {editedRound} = req.body;
+  const { editedRound } = req.body;
   // console.log(editedRound)
   const id = editedRound.id;
-  const updatedRound = await Round.findByIdAndUpdate(id, editedRound)
+  const updatedRound = await Round.findByIdAndUpdate(id, editedRound);
   // console.log(updatedRound);
   res.json(updatedRound);
 });
