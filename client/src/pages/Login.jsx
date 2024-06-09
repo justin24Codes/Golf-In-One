@@ -30,8 +30,8 @@ const Login = () => {
       .post("http://localhost:3000/login", { email, password })
       .then((res) => {
         if (res.data === "Success") {
-          localStorage.setItem('loggedIn', true )
-          localStorage.setItem('email', email)
+          localStorage.setItem("loggedIn", true);
+          localStorage.setItem("email", email);
           navigate("/rounds");
         } else {
           setLogin(true);

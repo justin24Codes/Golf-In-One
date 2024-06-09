@@ -203,8 +203,8 @@ export default [
         tees: [
             {
                 colour: "Black",
-                rating: 141,
-                slope: 73.7,
+                rating: 73.7,
+                slope: 141,
                 length: 6836,
                 usedBy: 'men',
                 allInfo: 'Black - Men (73.7/141)'
@@ -258,8 +258,8 @@ export default [
         tees: [
             {
                 colour: "Black",
-                rating: 133,
-                slope: 72.4,
+                rating: 72.4,
+                slope: 133,
                 length: 6810,
                 usedBy: 'men',
                 allInfo: 'Black - Men (72.4/133)'
@@ -305,8 +305,8 @@ export default [
         tees: [
             {
                 colour: "Gold",
-                rating: 148,
-                slope: 75.4,
+                rating: 75.4,
+                slope: 148,
                 length: 7134,
                 usedBy: 'men',
                 allInfo: 'Gold - Men (75.4/148)'
@@ -368,8 +368,8 @@ export default [
         tees: [
             {
                 colour: "Gold",
-                rating: 141,
-                slope: 74.2,
+                rating: 74.2,
+                slope: 141,
                 length: 7151,
                 usedBy: 'men',
                 allInfo: 'Gold - Men (74.2/141)'

@@ -43,7 +43,7 @@ const Statistics = () => {
       <div className="flex flex-col items-center pb-8">
         <PageTitle title="Statistics" />
         <div className="flex flex-row flex-wrap justify-center mt-16">
-          <StatCard label="Handicap" />
+          <StatCard label="Handicap" value={localStorage.getItem("handicap")}/>
           <StatCard label="Rounds Played" value={rounds.length} />
           <StatCard label="Lowest Score" value={lowestScore < 1000 ? lowestScore : 0}/>
           <StatCard label="Average Score" value={averageScore}/>

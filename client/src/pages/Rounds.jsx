@@ -15,9 +15,12 @@ const Rounds = () => {
   const [rounds, setRounds] = useState([]);
   const [formOpen, setFormOpen] = useState(false);
   const [editFormOpen, setEditFormOpen] = useState(false);
-  const [roundId, setRoundId] = useState('123');
+  const [roundId, setRoundId] = useState("123");
   const [refreshRounds, setRefreshRounds] = useState(false);
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState("");
+  const [scoreDifferentials, setScoreDifferentials] = useState([]);
+  const [slope, setSlope] = useState();
+  const [courseRating, setCourseRating] = useState();
 
   const onOpenForm = () => {
     setFormOpen(true);
@@ -30,11 +33,11 @@ const Rounds = () => {
   const deleteRound = async (id) => {
     try {
       setRefreshRounds(true);
-      await axios.delete(`http://localhost:3000/rounds/${id}`)
+      await axios.delete(`http://localhost:3000/rounds/${id}`);
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }
+  };
 
   const openEditForm = (id) => {
     setEditFormOpen(true);
@@ -50,13 +53,30 @@ const Rounds = () => {
         console.log(e);
       }
     };
-    setRefreshRounds(false)
+    setRefreshRounds(false);
     getRounds();
-    //Score Differential
-    // const scoreDifferential = (113/)
-
-
   }, [refreshRounds]);
+
+  useEffect(() => {
+      const calculateScoreDifferentials = async () => {
+        const newScoreDifferentials = await Promise.all(rounds.map(async (round) => {
+          const tee = await axios.post("http://localhost:3000/tee", {
+            course: round.course,
+            colour: round.tee
+          });
+          return (round.score - tee.data.rating) * (113 / tee.data.slope);
+        }));
+        setScoreDifferentials(newScoreDifferentials);
+      };
+      calculateScoreDifferentials();
+  }, [rounds]);
+
+  useEffect(() => {
+    const sortedScoreDifferentials = [...scoreDifferentials].sort((a,b) => a - b);
+    const lowestScoreDifferentials = sortedScoreDifferentials.slice(0,8);
+    const handicap = ((lowestScoreDifferentials.reduce((accumulator, currentValue) => accumulator + currentValue, 0)) / lowestScoreDifferentials.length).toFixed(1);
+    localStorage.setItem("handicap", handicap);
+  }, [scoreDifferentials])
 
   return (
     <div className="flex flex-col content-end justify-items-end font-noto-sans top-0">
@@ -92,14 +112,12 @@ const Rounds = () => {
                 >
                   {round.score}
                 </td>
-                <td className="px-2 bg-white">
-                  {round.course}
-                </td>
+                <td className="px-2 bg-white">{round.course}</td>
                 <td className="px-2 bg-white hidden sm:table-cell">
                   {round.numHoles}
                 </td>
                 <td className="px-2 bg-white hidden md:table-cell">
-                  {new Date(round.date).toLocaleDateString('en-CA')}
+                  {new Date(round.date).toLocaleDateString("en-CA")}
                 </td>
                 <td className="px-2 bg-white hidden lg:table-cell">
                   {round.tee}
@@ -121,7 +139,10 @@ const Rounds = () => {
                     index + 1 == rounds.length && "rounded-br-xl"
                   }`}
                 >
-                  <button onClick={() => deleteRound(round._id)} className="w-7 h-7 hover:bg-red-100 rounded-md flex items-center justify-center">
+                  <button
+                    onClick={() => deleteRound(round._id)}
+                    className="w-7 h-7 hover:bg-red-100 rounded-md flex items-center justify-center"
+                  >
                     <RiDeleteBin6Line className="w-5 h-5" color="red" />
                   </button>
                 </td>
@@ -137,8 +158,17 @@ const Rounds = () => {
       >
         Add Round
       </button>
-      <EditRoundForm onClose={() => setEditFormOpen(false)} open={editFormOpen} id={roundId} setRefreshRounds={setRefreshRounds}/>
-      <NewRoundForm onClose={onCloseForm} open={formOpen} setRefreshRounds={setRefreshRounds}/>
+      <EditRoundForm
+        onClose={() => setEditFormOpen(false)}
+        open={editFormOpen}
+        id={roundId}
+        setRefreshRounds={setRefreshRounds}
+      />
+      <NewRoundForm
+        onClose={onCloseForm}
+        open={formOpen}
+        setRefreshRounds={setRefreshRounds}
+      />
     </div>
   );
 };
