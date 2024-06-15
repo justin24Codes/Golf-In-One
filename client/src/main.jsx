@@ -5,7 +5,6 @@ import Home from "./pages/Home.jsx";
 import Courses from "./pages/Courses.jsx";
 import Rounds from "./pages/Rounds.jsx";
 import App from "./App.jsx";
-import NewRound from "./pages/NewRound.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import Login from "./pages/Login.jsx";
 import Statistics from "./pages/Statistics.jsx";
