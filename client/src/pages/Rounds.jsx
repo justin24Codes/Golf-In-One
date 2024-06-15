@@ -60,15 +60,19 @@ const Rounds = () => {
   useEffect(() => {
       const calculateScoreDifferentials = async () => {
         const newScoreDifferentials = await Promise.all(rounds.map(async (round) => {
-          const tee = await axios.post("http://localhost:3000/tee", {
-            course: round.course,
-            colour: round.tee
-          });
-          return (round.score - tee.data.rating) * (113 / tee.data.slope);
+          if (round.numHoles === "18") {
+            const tee = await axios.post("http://localhost:3000/tee", {
+              course: round.course,
+              colour: round.tee
+            });
+            return (round.score - tee.data.rating) * (113 / tee.data.slope);
+          }
+          return null;
         }));
-        setScoreDifferentials(newScoreDifferentials);
+        setScoreDifferentials(newScoreDifferentials.filter(diff => diff !== null));
       };
       calculateScoreDifferentials();
+      console.log(scoreDifferentials);
   }, [rounds]);
 
   useEffect(() => {
@@ -98,7 +102,7 @@ const Rounds = () => {
             </tr>
           </thead>
           <tbody className="rounded-b-lg">
-            {rounds.map((round, index) => (
+            {rounds.map((round, index) => (              
               <tr
                 className={`h-14 border-stone-300 border-b ${
                   index + 1 == rounds.length && "border-none"
@@ -123,8 +127,7 @@ const Rounds = () => {
                   {round.tee}
                 </td>
                 <td className="px-2 hidden xl:table-cell bg-white">
-                  {/* Needs Updating */}
-                  +4.5
+                  {/* {(localStorage.getItem("handicap") * (round.slope))} */}                  
                 </td>
                 <td className="bg-white">
                   <button

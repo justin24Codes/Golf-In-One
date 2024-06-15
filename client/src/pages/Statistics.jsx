@@ -10,7 +10,6 @@ const Statistics = () => {
   const [averageScore, setAverageScore] = useState(0);
   const [lowestScore, setLowestScore] = useState(0);
 
-
   useEffect(() => {
     const getRounds = async () => {
       try {
@@ -24,7 +23,8 @@ const Statistics = () => {
   }, []);
 
   useEffect(() => {
-    setScores(rounds.map(round => round.score));
+    setScores(
+      rounds.filter(round => round.numHoles === "18").map(round => round.score));
   }, [rounds]);
 
   useEffect(() => {
