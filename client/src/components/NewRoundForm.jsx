@@ -28,7 +28,6 @@ const NewRoundForm = ({ onClose, open, setRefreshRounds }) => {
     register,
     handleSubmit,
     formState: { errors },
-    
   } = useForm();
 
   const [date, setDate] = useState(new Date());
