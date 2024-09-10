@@ -41,15 +41,23 @@ const EditRoundForm = ({ onClose, open, id, setRefreshRounds }) => {
   const editRound = async (data) => {
     onClose();
     const score = data.score;
-    const email = localStorage.getItem('email');
+    const email = localStorage.getItem("email");
     const newDate = date.toISOString().slice(0, 10);
     const roundId = round._id;
-    const editedRound = { course:selectedCourse, tee, numHoles, date:newDate, score, email, id:roundId };
+    const editedRound = {
+      course: selectedCourse,
+      tee,
+      numHoles,
+      date: newDate,
+      score,
+      email,
+      id: roundId,
+    };
     try {
       setRefreshRounds(true);
-      await axios.put('http://localhost:3000/rounds', {editedRound});
+      await axios.put("http://localhost:3000/rounds", { editedRound });
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   };
 
@@ -61,7 +69,7 @@ const EditRoundForm = ({ onClose, open, id, setRefreshRounds }) => {
         setSelectedCourse(res.data[0].name);
         setTee(res.data[0].tees[0].colour);
       } catch (e) {
-        // console.log(e);
+        console.log(e);
       }
     };
     getCourses();
@@ -76,7 +84,7 @@ const EditRoundForm = ({ onClose, open, id, setRefreshRounds }) => {
         );
         setTees(res.data.tees);
         setTee(res.data.tees[0].colour);
-        setSelectedCourse(res.data.name)
+        setSelectedCourse(res.data.name);
       } catch (e) {
         console.log(e);
       }
@@ -90,14 +98,30 @@ const EditRoundForm = ({ onClose, open, id, setRefreshRounds }) => {
       try {
         const res = await axios.get(`http://localhost:3000/rounds/${id}`);
         setRound(res.data);
-        const oldDate = new Date(res.data.date);
-        setDate(oldDate);
-        const courseName = res.data.course;
-        const response = await axios.post(`http://localhost:3000/course`, {
-          courseName
-        });
-        setTees(response.data.tees);
-      } catch (e) {}
+        // const oldDate = new Date(res.data.date.slice(0,10));
+        // setDate(oldDate);
+        if (res.data.date) {
+          const oldDate = new Date(res.data.date.slice(0, 10));
+          setDate(oldDate);
+          setNumHoles(res.data.numHoles);
+          const courseName = res.data.course;
+          const response = await axios.post(`http://localhost:3000/course`, {
+            courseName,
+          });
+          setTees(response.data.tees);
+        } else {
+          // setDate(new Date()); // Set to the current date as a fallback
+        }
+
+        // setNumHoles(res.data.numHoles);
+        // const courseName = res.data.course;
+        // const response = await axios.post(`http://localhost:3000/course`, {
+        //   courseName,
+        // });
+        // setTees(response.data.tees);
+      } catch (e) {
+        console.log(e);
+      }
     };
     getRound();
   }, [id]);
