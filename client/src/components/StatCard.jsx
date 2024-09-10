@@ -1,5 +1,3 @@
-
-
 const StatCard = ({ label, value }) => {
   return (
     <div className='flex flex-col mb-6 hover:text-golf'>

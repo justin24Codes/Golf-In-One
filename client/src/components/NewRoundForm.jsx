@@ -27,6 +27,7 @@ const NewRoundForm = ({ onClose, open, setRefreshRounds }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -54,7 +55,7 @@ const NewRoundForm = ({ onClose, open, setRefreshRounds }) => {
             `http://localhost:3000/courses/${courseId}`
           );
           setTees(res.data.tees);
-          setTee(res.data.tees[0].colour)
+          setTee(res.data.tees[0].colour);
         } catch (e) {
           // console.log(e);
         }
@@ -67,13 +68,16 @@ const NewRoundForm = ({ onClose, open, setRefreshRounds }) => {
     onClose();
     const score = data.score;
     const newDate = date.toISOString().slice(0, 10);
-    const email = localStorage.getItem('email')
+    const email = localStorage.getItem("email");
     const round = { selectedCourse, tee, numHoles, newDate, score, email };
+    reset({
+      score: null,
+    });
     try {
       setRefreshRounds(true);
-      await axios.post('http://localhost:3000/rounds/postround', {round});
+      await axios.post("http://localhost:3000/rounds/postround", { round });
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   };
 

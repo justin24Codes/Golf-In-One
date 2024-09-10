@@ -72,7 +72,6 @@ const Rounds = () => {
         setScoreDifferentials(newScoreDifferentials.filter(diff => diff !== null));
       };
       calculateScoreDifferentials();
-      console.log(scoreDifferentials);
   }, [rounds]);
 
   useEffect(() => {
@@ -95,7 +94,7 @@ const Rounds = () => {
               <th className="px-2 hidden md:table-cell bg-stone-200 ">Date</th>
               <th className="px-2 hidden lg:table-cell bg-stone-200">Tee</th>
               <th className="px-2 hidden xl:table-cell bg-stone-200">
-                Course Handicap
+                {/* Course Handicap */}
               </th>
               <th className="px-2 bg-stone-200"></th>
               <th className="px-2 bg-stone-200 rounded-tr-xl"></th>
@@ -121,7 +120,7 @@ const Rounds = () => {
                   {round.numHoles}
                 </td>
                 <td className="px-2 bg-white hidden md:table-cell">
-                  {new Date(round.date).toLocaleDateString("en-CA")}
+                  {round.date ? new Date(round.date).toLocaleDateString("en-CA") : null}
                 </td>
                 <td className="px-2 bg-white hidden lg:table-cell">
                   {round.tee}
